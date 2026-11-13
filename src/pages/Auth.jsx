@@ -93,7 +93,7 @@ function VerifyStep({ email, onBack, initialCooldown = 60 }) {
 export function Register() {
   const toast = useToast()
   const { t, lang } = useI18n()
-  const [form, setForm] = useState({ fullName: '', email: '', password: '', company: '' })
+  const [form, setForm] = useState({ fullName: '', email: '', password: '', confirm: '', company: '' })
   const [step, setStep] = useState('form')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -101,12 +101,16 @@ export function Register() {
   const config = useServerConfig()
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
+  const mismatch = form.confirm.length > 0 && form.confirm !== form.password
+
   const submit = async (e) => {
     e.preventDefault()
+    if (form.password !== form.confirm) return setError(t('The passwords do not match'))
     setBusy(true)
     setError('')
     try {
-      const r = await api('/api/auth/register', { method: 'POST', body: { ...form, company: form.company || undefined, locale: lang } })
+      const { confirm: _confirm, ...fields } = form
+      const r = await api('/api/auth/register', { method: 'POST', body: { ...fields, company: form.company || undefined, locale: lang } })
       if (!r.emailSent && (await loadServerConfig()).mailEnabled) toast.error('We could not send the email right now — try "Resend code" shortly.')
       setCooldown(r.resendAfter || 60)
       setStep('verify')
@@ -129,6 +133,11 @@ export function Register() {
             <div className="field"><label htmlFor="fn">{t('Full name')}</label><input id="fn" className="input" required minLength={2} value={form.fullName} onChange={set('fullName')} autoComplete="name" /></div>
             <div className="field"><label htmlFor="em">{t('Email')}</label><input id="em" className="input" type="email" required value={form.email} onChange={set('email')} autoComplete="email" /></div>
             <div className="field"><label htmlFor="pw">{t('Password')}</label><input id="pw" className="input" type="password" required minLength={8} value={form.password} onChange={set('password')} autoComplete="new-password" placeholder={t('At least 8 characters')} /></div>
+            <div className="field">
+              <label htmlFor="pw2">{t('Confirm password')}</label>
+              <input id="pw2" className="input" type="password" required minLength={8} value={form.confirm} onChange={set('confirm')} autoComplete="new-password" aria-invalid={mismatch} style={mismatch ? { borderColor: 'var(--danger)' } : undefined} />
+              {mismatch && <span className="error-text">{t('The passwords do not match')}</span>}
+            </div>
             <div className="field"><label htmlFor="co">{t('Company')} <span className="muted">({t('optional')})</span></label><input id="co" className="input" value={form.company} onChange={set('company')} autoComplete="organization" /></div>
             {error && <div className="alert alert-error" style={{ marginBottom: 12 }}>{error}</div>}
             <button className="btn btn-primary btn-block btn-lg" disabled={busy}>{busy ? t('Creating…') : t('Create account')}</button>

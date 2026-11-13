@@ -500,6 +500,8 @@ export default {
   'Personal information': 'Şəxsi məlumatlar',
   'Change password': 'Şifrəni dəyiş',
   'Current password': 'Cari şifrə',
+  'Confirm password': 'Şifrəni təsdiqləyin',
+  'The passwords do not match': 'Şifrələr üst-üstə düşmür',
   'Confirm new password': 'Yeni şifrəni təsdiqləyin',
   'The new passwords do not match': 'Yeni şifrələr üst-üstə düşmür',
   'Password changed': 'Şifrə dəyişdirildi',
