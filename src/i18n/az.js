@@ -544,6 +544,14 @@ export default {
   '{n} user(s) have this type. Move them to:': '{n} istifadəçi bu növdədir. Onları bu növə köçürün:',
   'Some users still have this type. Choose another type to move them to.': 'Bəzi istifadəçilər hələ bu növdədir. Onları köçürmək üçün başqa növ seçin.',
 
+  // ── Email unavailable mode ──────────────────────────────────────────
+  'Confirm your account': 'Hesabınızı təsdiqləyin',
+  'The email confirmation service is unavailable right now.': 'E-poçt təsdiq xidməti hazırda əlçatan deyil.',
+  'Please enter {code} as your confirmation code.': 'Zəhmət olmasa təsdiq kodu olaraq {code} daxil edin.',
+  'Free forever.': 'Həmişə pulsuz.',
+  'Password reset by email is currently unavailable. Please contact an administrator to set a new password.': 'E-poçt ilə şifrə bərpası hazırda əlçatan deyil. Yeni şifrə təyin etmək üçün administratorla əlaqə saxlayın.',
+  'Sending emails is currently unavailable. Copy the share link and send it to your clients yourself.': 'E-poçt göndərilməsi hazırda əlçatan deyil. Paylaşım linkini kopyalayıb müştərilərinizə özünüz göndərin.',
+
   // ── Event labels ────────────────────────────────────────────────────
   'User created by admin': 'İstifadəçi admin tərəfindən yaradıldı',
   'User deleted by admin': 'İstifadəçi admin tərəfindən silindi',

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../api/client.js'
+import { loadServerConfig, useServerConfig } from '../api/serverConfig.js'
 import { useAuth } from '../context/AuthContext.jsx'
 import { useToast } from '../context/ToastContext.jsx'
 import { useI18n } from '../i18n/index.jsx'
@@ -34,6 +35,8 @@ function VerifyStep({ email, onBack, initialCooldown = 60 }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [left, setLeft] = useCountdown(initialCooldown)
+  const config = useServerConfig()
+  const mailOff = config?.mailEnabled === false
 
   const verify = async (c = code) => {
     if (c.length !== 4) return
@@ -65,16 +68,23 @@ function VerifyStep({ email, onBack, initialCooldown = 60 }) {
   return (
     <div className="center">
       <div className="empty-icon"><Icon name="mail" size={28} /></div>
-      <h1>{t('Check your inbox')}</h1>
-      <p className="muted">{t('We sent a 4-digit code to')} <b style={{ color: 'var(--ink)' }}>{email}</b></p>
+      <h1>{mailOff ? t('Confirm your account') : t('Check your inbox')}</h1>
+      {mailOff ? (
+        <div className="alert alert-info" role="status" style={{ textAlign: 'left' }}>
+          <b>{t('The email confirmation service is unavailable right now.')}</b><br />
+          {t('Please enter {code} as your confirmation code.', { code: config.otpFallbackCode || '0000' })}
+        </div>
+      ) : (
+        <p className="muted">{t('We sent a 4-digit code to')} <b style={{ color: 'var(--ink)' }}>{email}</b></p>
+      )}
       <OtpInput value={code} onChange={setCode} onComplete={verify} disabled={busy} />
       {error && <div className="alert alert-error" style={{ marginBottom: 12 }}>{error}</div>}
       <button className="btn btn-primary btn-block btn-lg" disabled={busy || code.length !== 4} onClick={() => verify()}>
         {busy ? t('Verifying…') : t('Verify & continue')}
       </button>
       <p className="small muted mt-2">
-        {t("Didn't get it?")} {left > 0 ? t('Resend in {n}s', { n: left }) : <button className="btn btn-text btn-sm" onClick={resend}>{t('Resend code')}</button>}
-        {onBack && <> · <button className="btn btn-text btn-sm" onClick={onBack}>{t('Change email')}</button></>}
+        {!mailOff && <>{t("Didn't get it?")} {left > 0 ? t('Resend in {n}s', { n: left }) : <button className="btn btn-text btn-sm" onClick={resend}>{t('Resend code')}</button>}</>}
+        {onBack && <>{!mailOff && ' · '}<button className="btn btn-text btn-sm" onClick={onBack}>{t('Change email')}</button></>}
       </p>
     </div>
   )
@@ -88,6 +98,7 @@ export function Register() {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [cooldown, setCooldown] = useState(60)
+  const config = useServerConfig()
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
 
   const submit = async (e) => {
@@ -96,7 +107,7 @@ export function Register() {
     setError('')
     try {
       const r = await api('/api/auth/register', { method: 'POST', body: { ...form, company: form.company || undefined, locale: lang } })
-      if (!r.emailSent) toast.error('We could not send the email right now — try "Resend code" shortly.')
+      if (!r.emailSent && (await loadServerConfig()).mailEnabled) toast.error('We could not send the email right now — try "Resend code" shortly.')
       setCooldown(r.resendAfter || 60)
       setStep('verify')
     } catch (err) {
@@ -114,7 +125,7 @@ export function Register() {
         ) : (
           <form onSubmit={submit}>
             <h1>{t('Create your account')}</h1>
-            <p className="muted">{t("Free forever. We'll email you a 4-digit code to confirm.")}</p>
+            <p className="muted">{config?.mailEnabled === false ? t('Free forever.') : t("Free forever. We'll email you a 4-digit code to confirm.")}</p>
             <div className="field"><label htmlFor="fn">{t('Full name')}</label><input id="fn" className="input" required minLength={2} value={form.fullName} onChange={set('fullName')} autoComplete="name" /></div>
             <div className="field"><label htmlFor="em">{t('Email')}</label><input id="em" className="input" type="email" required value={form.email} onChange={set('email')} autoComplete="email" /></div>
             <div className="field"><label htmlFor="pw">{t('Password')}</label><input id="pw" className="input" type="password" required minLength={8} value={form.password} onChange={set('password')} autoComplete="new-password" placeholder={t('At least 8 characters')} /></div>
@@ -190,6 +201,7 @@ export function ForgotPassword() {
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const config = useServerConfig()
 
   const request = async (e) => {
     e.preventDefault()
@@ -221,7 +233,13 @@ export function ForgotPassword() {
   return (
     <div className="auth-wrap">
       <div className="card auth-card glow-border">
-        {step === 'email' ? (
+        {config?.passwordReset === false ? (
+          <div>
+            <h1>{t('Reset password')}</h1>
+            <div className="alert alert-info">{t('Password reset by email is currently unavailable. Please contact an administrator to set a new password.')}</div>
+            <p className="small muted center mt-2"><Link to="/login">{t('Back to sign in')}</Link></p>
+          </div>
+        ) : step === 'email' ? (
           <form onSubmit={request}>
             <h1>{t('Reset password')}</h1>
             <p className="muted">{t("Enter your email and we'll send you a 4-digit code.")}</p>

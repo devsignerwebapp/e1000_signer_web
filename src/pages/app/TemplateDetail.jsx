@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api, apiOrigin, downloadFromApi } from '../../api/client.js'
+import { useServerConfig } from '../../api/serverConfig.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useToast } from '../../context/ToastContext.jsx'
 import { useT } from '../../i18n/index.jsx'
@@ -22,6 +23,8 @@ export default function TemplateDetail() {
   const [emails, setEmails] = useState('')
   const [message, setMessage] = useState('')
   const [sending, setSending] = useState(false)
+  const config = useServerConfig()
+  const mailOff = config?.mailEnabled === false
 
   const load = useCallback(() => {
     api(`/api/templates/${id}`).then((d) => setTpl(d.template)).catch(toast.error)
@@ -100,9 +103,10 @@ export default function TemplateDetail() {
         {can('template.share') && (
           <form className="card" onSubmit={send}>
             <h3>{t('Email to clients')}</h3>
+            {mailOff && <div className="alert alert-info" style={{ marginBottom: 12 }}>{t('Sending emails is currently unavailable. Copy the share link and send it to your clients yourself.')}</div>}
             <div className="field"><label htmlFor="em">{t('Recipients')}</label><textarea id="em" className="textarea" style={{ minHeight: 70 }} placeholder="client@company.com, other@company.com" value={emails} onChange={(e) => setEmails(e.target.value)} /></div>
             <div className="field"><label htmlFor="msg">{t('Message')}</label><textarea id="msg" className="textarea" placeholder={tpl.message || t('Optional personal note')} value={message} onChange={(e) => setMessage(e.target.value)} /></div>
-            <button className="btn btn-primary" disabled={sending || !tpl.isActive}><Icon name="mail" size={16} /> {sending ? t('Sending…') : t('Send signing request')}</button>
+            <button className="btn btn-primary" disabled={sending || !tpl.isActive || mailOff}><Icon name="mail" size={16} /> {sending ? t('Sending…') : t('Send signing request')}</button>
             {!tpl.isActive && <p className="small muted mt-1">{t('Activate the link to send it.')}</p>}
           </form>
         )}

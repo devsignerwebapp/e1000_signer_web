@@ -45,6 +45,7 @@ const CODE_MESSAGES = {
   SIGN_TYPE_NOT_ALLOWED: 'This signature type is not allowed for this document',
   MISSING_PERMISSION: 'You do not have permission to do this',
   WRONG_PASSWORD: 'Current password is incorrect',
+  PASSWORD_RESET_UNAVAILABLE: 'Password reset by email is currently unavailable. Please contact an administrator to set a new password.',
   SAME_PASSWORD: 'The new password must be different',
   USERTYPE_IN_USE: 'Some users still have this type. Choose another type to move them to.',
 }
