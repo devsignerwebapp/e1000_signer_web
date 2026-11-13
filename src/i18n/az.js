@@ -77,8 +77,12 @@ export default {
   '{n}d ago': '{n} gün əvvəl',
   '{n}d': '{n} gün',
   'Request failed ({status})': 'Sorğu uğursuz oldu ({status})',
-  'This page drifted into space': 'Bu səhifə kosmosa uçub getdi',
-  'Back home': 'Ana səhifəyə qayıt',
+  'Page not found': 'Səhifə tapılmadı',
+  "The page you're looking for doesn't exist, was moved, or the link is incomplete.": 'Axtardığınız səhifə mövcud deyil, köçürülüb və ya link natamamdır.',
+  'Go back': 'Geri qayıt',
+  Home: 'Ana səhifə',
+  'Go to dashboard': 'İdarə panelinə keç',
+  'Opened a signing link? Ask the sender for a new one — it may have been regenerated or deactivated.': 'İmza linkini açmısınız? Göndərəndən yenisini istəyin — link yenilənmiş və ya deaktiv edilmiş ola bilər.',
 
   // ── Usertypes ───────────────────────────────────────────────────────
   Guest: 'Qonaq',

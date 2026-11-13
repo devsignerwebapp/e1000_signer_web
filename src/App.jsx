@@ -54,6 +54,7 @@ export default function App() {
           <Route path="developers" element={<RequireAuth perm="api.keys.manage"><Developers /></RequireAuth>} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Navigate to="/app/profile" replace />} />
+          <Route path="*" element={<NotFound compact />} />
         </Route>
 
         <Route path="/admin" element={<RequireAuth perm="admin.dashboard.view"><Navbar /><AdminShell /></RequireAuth>}>
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="users" element={<AdminUsers />} />
           <Route path="roles" element={<AdminRoles />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="*" element={<NotFound compact />} />
         </Route>
       </Routes>
       </Suspense>
