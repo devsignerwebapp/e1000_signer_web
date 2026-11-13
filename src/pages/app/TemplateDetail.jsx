@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { api, downloadFromApi } from '../../api/client.js'
+import { api, apiOrigin, downloadFromApi } from '../../api/client.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useToast } from '../../context/ToastContext.jsx'
 import { useT } from '../../i18n/index.jsx'
@@ -61,8 +61,7 @@ export default function TemplateDetail() {
     }
   }
 
-  const apiOrigin = window.location.port === '5173' ? `${location.protocol}//${location.hostname}:4000` : location.origin
-  const embed = `<script src="${apiOrigin}/embed.js"></script>
+  const embed = `<script src="${apiOrigin()}/embed.js"></script>
 <button onclick="E1000Signer.open('${tpl.shareToken}', { onSigned: s => console.log(s) })">Sign now</button>`
 
   return (

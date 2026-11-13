@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Icon from './Icon.jsx'
 import { useToast } from '../context/ToastContext.jsx'
+import { apiOrigin } from '../api/client.js'
 import { useT } from '../i18n/index.jsx'
 
 export function CodeBlock({ code }) {
@@ -191,7 +192,7 @@ app.post('/hooks/e1000', express.raw({ type: 'application/json' }), (req, res) =
 
 export default function CodeSamples({ apiKey = 'e1k_YOUR_API_KEY' }) {
   const t = useT()
-  const base = window.location.port === '5173' ? `${window.location.protocol}//${window.location.hostname}:4000` : window.location.origin
+  const base = apiOrigin()
   const all = samples(base, apiKey, window.location.origin)
   const langs = Object.keys(all)
   const [lang, setLang] = useState(langs[0])

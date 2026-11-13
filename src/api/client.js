@@ -1,7 +1,14 @@
 // Thin fetch wrapper. In dev, Vite proxies /api → http://localhost:4000.
 import { getLang, translate } from '../i18n/index.jsx'
 
-export const API_BASE = import.meta.env.VITE_API_URL || ''
+export const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '')
+
+/** Absolute public origin of the backend (for code samples, embed snippets, OpenAPI links). */
+export function apiOrigin() {
+  if (API_BASE) return API_BASE
+  const { protocol, hostname, port, origin } = window.location
+  return port === '5173' ? `${protocol}//${hostname}:4000` : origin // dev: Vite on 5173, API on 4000
+}
 const TOKEN_KEY = 'e1k_token'
 
 export const tokenStore = {
