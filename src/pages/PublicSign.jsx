@@ -58,7 +58,17 @@ export default function PublicSign() {
   }
   const reuseSig = () => applySig(lastSig[active.kind])
 
-  const renderOverlay = (page) =>
+  // Sender's pre-signed items: read-only, shown exactly where they will be stamped.
+  const renderOwner = (page, size) =>
+    (tpl?.ownerPlacements || []).filter((p) => p.page === page).map((p, i) => (
+      <div key={`own-${i}`} className="owner-stamp" style={{ left: `${p.x * 100}%`, top: `${p.y * 100}%`, width: `${p.w * 100}%`, height: `${p.h * 100}%` }} title={t('Signed by {name}', { name: tpl.ownerName })}>
+        {p.image ? <img src={p.image} alt="" /> : <span style={{ color: p.color || '#0f1535', fontSize: Math.max(8, Math.min(p.h * size.h * 0.7, 28 * (size.w / 595))) }}>{p.text}</span>}
+      </div>
+    ))
+
+  const renderOverlay = (page, size) => [...renderOwner(page, size), ...renderFields(page)]
+
+  const renderFields = (page) =>
     fields.filter((f) => f.page === page).map((f) => {
       const v = values[f.id]
       return (

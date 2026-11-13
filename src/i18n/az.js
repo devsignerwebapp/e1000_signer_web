@@ -558,6 +558,22 @@ export default {
   'Password reset by email is currently unavailable. Please contact an administrator to set a new password.': 'E-poçt ilə şifrə bərpası hazırda əlçatan deyil. Yeni şifrə təyin etmək üçün administratorla əlaqə saxlayın.',
   'Sending emails is currently unavailable. Copy the share link and send it to your clients yourself.': 'E-poçt göndərilməsi hazırda əlçatan deyil. Paylaşım linkini kopyalayıb müştərilərinizə özünüz göndərin.',
 
+  // ── Templates: sender signing & client-signed documents ─────────────
+  'My documents': 'Sənədlərim',
+  'Signed by clients': 'Müştərilərin imzaladıqları',
+  'No client has signed yet. Share a template link to collect signatures.': 'Hələ heç bir müştəri imzalamayıb. İmza toplamaq üçün şablon linkini paylaşın.',
+  'Go to templates': 'Şablonlara keç',
+  'Search signer, email, template…': 'İmzalayan, e-poçt, şablon üzrə axtar…',
+  '{n} signed document(s)': '{n} imzalanmış sənəd',
+  'Open template': 'Şablonu aç',
+  'Fields for your client': 'Müştəri üçün sahələr',
+  'Sign as sender': 'Göndərən kimi imzala',
+  'Add your own signature, text or date. It appears on every copy your clients sign.': 'Öz imzanızı, mətninizi və ya tarixi əlavə edin. O, müştərilərinizin imzaladığı hər nüsxədə görünəcək.',
+  'Your signature (sender)': 'Sizin imzanız (göndərən)',
+  '{n} sender item(s)': '{n} göndərən elementi',
+  'Type the text first': 'Əvvəlcə mətni yazın',
+  'Signed by {name}': '{name} tərəfindən imzalanıb',
+
   // ── Event labels ────────────────────────────────────────────────────
   'User created by admin': 'İstifadəçi admin tərəfindən yaradıldı',
   'User deleted by admin': 'İstifadəçi admin tərəfindən silindi',

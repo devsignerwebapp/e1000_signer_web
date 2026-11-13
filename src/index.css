@@ -404,3 +404,10 @@ button { font: inherit; }
 .nf-path { display: inline-block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 4px 10px; border-radius: 8px; background: #eef1ff; border: 1px solid var(--border); font-size: 13px; color: var(--ink-2); }
 .nf-actions { justify-content: center; margin-top: 20px; }
 .nf-help { margin: 18px 0 0; }
+
+/* ── Sender (template owner) items ── */
+.placed.owner-item { border-color: rgba(16, 185, 129, 0.0); }
+.placed.owner-item:hover, .placed.owner-item.selected { border-color: var(--success); background: rgba(16, 185, 129, 0.06); }
+.owner-stamp { position: absolute; display: flex; align-items: center; pointer-events: none; overflow: hidden; }
+.owner-stamp img { width: 100%; height: 100%; object-fit: contain; }
+.owner-stamp span { white-space: nowrap; font-family: Helvetica, Arial, sans-serif; padding-left: 2px; }
