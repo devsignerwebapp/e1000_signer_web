@@ -7,6 +7,7 @@ import { useT } from '../../i18n/index.jsx'
 import { Loading, PageHead } from '../../components/Layout.jsx'
 import SignEditor from '../../components/SignEditor.jsx'
 import Icon from '../../components/Icon.jsx'
+import AiAnalysisButton from '../../components/AiAnalysis.jsx'
 
 export default function DocumentSign() {
   const { id } = useParams()
@@ -42,6 +43,7 @@ export default function DocumentSign() {
     <>
       <PageHead title={doc.title} subtitle={`${t('{n} page(s)', { n: doc.pageCount })} · ${doc.isSigned ? t('a signed version exists — signing again replaces it') : t('not signed yet')}`}>
         <Link to="/app/documents" className="btn btn-ghost">{t('Back')}</Link>
+        <AiAnalysisButton startPath={`/api/documents/${id}/analysis`} />
         {doc.isSigned && <button className="btn btn-ghost" onClick={() => downloadFromApi(`/api/documents/${id}/download`).catch(toast.error)}><Icon name="download" size={16} /> {t('Signed PDF')}</button>}
       </PageHead>
       {buffer && <SignEditor buffer={buffer} onSubmit={submit} submitting={busy} defaultName={user.fullName} submitLabel={t('Sign, save & download')} />}

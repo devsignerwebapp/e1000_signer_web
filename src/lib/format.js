@@ -47,7 +47,11 @@ const EVENT_LABELS = {
   'admin.usertype_deleted': 'User type deleted',
   'auth.password_changed': 'Password changed',
   'auth.avatar_changed': 'Profile photo changed',
+  'ai.analysis_requested': 'AI analysis started',
+  'ai.analysis_completed': 'AI analysis completed',
+  'ai.analysis_failed': 'AI analysis failed',
+  'ai.analysis_cached': 'AI analysis reused from cache',
 }
 export const eventLabel = (type) => (EVENT_LABELS[type] ? t(EVENT_LABELS[type]) : type)
 
-export const CATEGORY_BADGE = { auth: 'badge', document: 'badge badge-success', template: 'badge', submission: 'badge badge-success', api: 'badge badge-muted', admin: 'badge badge-warning', demo: 'badge badge-muted' }
+export const CATEGORY_BADGE = { auth: 'badge', document: 'badge badge-success', template: 'badge', submission: 'badge badge-success', api: 'badge badge-muted', admin: 'badge badge-warning', demo: 'badge badge-muted', ai: 'badge badge-pro' }

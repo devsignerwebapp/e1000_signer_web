@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Icon from './Icon.jsx'
 import { useT } from '../i18n/index.jsx'
 
@@ -9,7 +10,9 @@ export default function Modal({ title, onClose, children, width }) {
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [onClose])
-  return (
+  // Portal to <body>: a parent with transform / backdrop-filter (e.g. glass .card) would otherwise
+  // trap this position:fixed overlay inside itself.
+  return createPortal(
     <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose?.()}>
       <div className="modal" role="dialog" aria-modal="true" aria-label={title} style={width ? { maxWidth: width } : undefined}>
         <div className="modal-head">
@@ -18,6 +21,7 @@ export default function Modal({ title, onClose, children, width }) {
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

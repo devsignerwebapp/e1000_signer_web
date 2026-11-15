@@ -10,6 +10,7 @@ import LanguageSwitcher from '../components/LanguageSwitcher.jsx'
 import { Brand } from '../components/Layout.jsx'
 import { needsImageText, textToPng, todayString } from '../lib/signature.js'
 import { useT } from '../i18n/index.jsx'
+import AiAnalysisButton from '../components/AiAnalysis.jsx'
 
 const KIND_LABEL = { signature: 'Sign here', initials: 'Initials', text: 'Text', date: 'Date' }
 const TYPE_LABEL = { draw: 'drawn', type: 'typed', upload: 'uploaded/seal' }
@@ -169,6 +170,11 @@ export default function PublicSign() {
                 </button>
               ))}
               <p className="small muted" style={{ margin: 0 }}>{t('Allowed signature types:')} {tpl.allowedSignTypes.map((x) => t(TYPE_LABEL[x])).join(', ')}</p>
+            </div>
+            <div className="card card-tight stack ai-cta" style={{ gap: 8 }}>
+              <b className="small">{t('Not sure what you are signing?')}</b>
+              <span className="small muted">{t('Let AI review the document for risky clauses before you sign.')}</span>
+              <AiAnalysisButton startPath={`/api/public/sign/${token}/analysis`} block />
             </div>
             {submitErr && <div className="alert alert-error">{submitErr}</div>}
             <button className="btn btn-primary btn-lg btn-block" disabled={busy} onClick={submit}>

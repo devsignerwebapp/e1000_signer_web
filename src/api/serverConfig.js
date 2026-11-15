@@ -3,7 +3,7 @@ import { api } from './client.js'
 
 // Server feature flags (GET /api/public/config), fetched once per page load.
 // { mailEnabled, passwordReset, otpFallbackCode }
-const DEFAULTS = { mailEnabled: true, passwordReset: true, otpFallbackCode: null }
+const DEFAULTS = { mailEnabled: true, passwordReset: true, otpFallbackCode: null, aiEnabled: false }
 let cache = null
 let pending = null
 

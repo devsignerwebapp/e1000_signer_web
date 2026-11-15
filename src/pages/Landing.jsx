@@ -105,7 +105,7 @@ export default function Landing() {
             <h3>Pro</h3>
             <div className="price">—</div>
             <p className="muted small">{t('For growing teams')}</p>
-            <ul><li>{t('Everything in Free')}</li><li>{t('Bulk send (planned)')}</li><li>{t('Custom branding (planned)')}</li><li>{t('Audit certificate (planned)')}</li></ul>
+            <ul><li>{t('Everything in Free')}</li><li>{t('AI legal analysis of documents')}</li><li>{t('Bulk send (planned)')}</li><li>{t('Custom branding (planned)')}</li><li>{t('Audit certificate (planned)')}</li></ul>
             <button className="btn btn-ghost btn-block" disabled>{t('Notify me')}</button>
           </div>
         </div>

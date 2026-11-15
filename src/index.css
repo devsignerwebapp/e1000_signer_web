@@ -411,3 +411,16 @@ button { font: inherit; }
 .owner-stamp { position: absolute; display: flex; align-items: center; pointer-events: none; overflow: hidden; }
 .owner-stamp img { width: 100%; height: 100%; object-fit: contain; }
 .owner-stamp span { white-space: nowrap; font-family: Helvetica, Arial, sans-serif; padding-left: 2px; }
+
+/* ── AI legal analysis (Pro) ── */
+.ai-btn .badge-pro { font-size: 10px; padding: 2px 7px; }
+.ai-report h4 { font-size: 15px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+.ai-overview { padding: 16px; border-radius: 14px; background: var(--grad-soft); border: 1px solid var(--border); }
+.ai-risk { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); border-left-width: 4px; background: #fff; }
+.ai-risk-high { border-left-color: var(--danger); }
+.ai-risk-medium { border-left-color: var(--warning); }
+.ai-risk-low { border-left-color: var(--success); }
+.ai-clause { margin: 8px 0 0; padding: 8px 12px; border-radius: 8px; background: #f6f7fc; font-size: 13px; color: var(--ink-2); font-style: italic; }
+.ai-list { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.ai-terms { grid-template-columns: minmax(120px, max-content) 1fr; }
+.ai-cta { background: linear-gradient(135deg, rgba(124, 77, 255, 0.08), rgba(34, 211, 238, 0.08)); }
