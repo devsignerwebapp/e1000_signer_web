@@ -10,6 +10,7 @@ import Dropzone from '../../components/Dropzone.jsx'
 import SignaturePad from '../../components/SignaturePad.jsx'
 import ColorPicker from '../../components/ColorPicker.jsx'
 import Icon from '../../components/Icon.jsx'
+import AiAnalysisButton from '../../components/AiAnalysis.jsx'
 import { needsImageText, textToPng, todayString, uid } from '../../lib/signature.js'
 import { useAuth } from '../../context/AuthContext.jsx'
 
@@ -202,6 +203,7 @@ export default function TemplateBuilder() {
     <>
       <PageHead title={id ? t('Edit template') : t('New template')} subtitle={t('Place the fields your clients must fill, choose allowed signature types, then share the link.')}>
         <Link to={id ? `/app/templates/${id}` : '/app/templates'} className="btn btn-ghost">{t('Cancel')}</Link>
+        <AiAnalysisButton startPath={`/api/documents/${docId}/analysis`} />
         <button className="btn btn-primary" onClick={save} disabled={saving}><Icon name="check" /> {saving ? t('Saving…') : t('Save template')}</button>
       </PageHead>
       <div className="editor">

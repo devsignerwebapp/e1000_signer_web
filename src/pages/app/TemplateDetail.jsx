@@ -8,6 +8,7 @@ import { useT } from '../../i18n/index.jsx'
 import { Loading, PageHead } from '../../components/Layout.jsx'
 import { CodeBlock } from '../../components/CodeSamples.jsx'
 import Icon from '../../components/Icon.jsx'
+import AiAnalysisButton from '../../components/AiAnalysis.jsx'
 import { fmtDate } from '../../lib/format.js'
 
 const TYPE_NAMES = { draw: 'Draw', type: 'Type', upload: 'Upload' }
@@ -71,6 +72,7 @@ export default function TemplateDetail() {
     <>
       <PageHead title={tpl.name} subtitle={`${tpl.documentTitle} · ${t('{n} field(s)', { n: tpl.fields.length })} · ${t('allowed:')} ${tpl.allowedSignTypes.map((x) => t(TYPE_NAMES[x])).join(', ')}`}>
         <Link to="/app/templates" className="btn btn-ghost">{t('Back')}</Link>
+        <AiAnalysisButton startPath={`/api/documents/${tpl.documentId}/analysis`} />
         {can('template.manage') && <Link to={`/app/templates/${id}/edit`} className="btn btn-ghost"><Icon name="pen" size={15} /> {t('Edit fields')}</Link>}
         <a href={tpl.shareUrl} target="_blank" rel="noreferrer" className="btn btn-primary"><Icon name="eye" size={16} /> {t('Preview')}</a>
       </PageHead>
